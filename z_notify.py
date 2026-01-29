@@ -1,7 +1,7 @@
 import smtplib
 import email.utils
 from email.message import EmailMessage
-
+import os
 
 class EmailNotify:
 
