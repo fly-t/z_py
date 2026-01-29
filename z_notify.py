@@ -6,9 +6,13 @@ from email.message import EmailMessage
 class EmailNotify:
 
     SMTP_SERVER = "smtp.qq.com"
-    FROM_ADDR = "1417412005@qq.com"
+    # FROM_ADDR = "1417412005@qq.com"
     # qq授权码
-    FROM_ADDR_AUTH = ""
+    try:
+        FROM_ADDR = yhtck = os.environ.get("email_qq")
+        FROM_ADDR_AUTH = yhtck = os.environ.get("email_auth")
+    except Exception as e:
+        print(f"❌ Failed to get email auth set to default: {e}")
 
     def __init__(self, smtp_server=SMTP_SERVER, from_addr=FROM_ADDR, auth=FROM_ADDR_AUTH,
                  port=465, use_ssl=True, debug=False):
