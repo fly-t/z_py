@@ -40,7 +40,6 @@ class LocalMarketNotify(EmailNotify):
             return True
         else:
             print(f"❌ 今天是农历 {lunar.month}月{lunar.day}日，不是赶集日")
-            self.send_email(to_addr="1312765847@qq.com",send_name="不是赶集日通知",msg_content=f"今天是农历 {lunar.month}月{lunar.day}日，不是赶集日")
             return False
 
 
