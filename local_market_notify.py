@@ -17,7 +17,7 @@ class LocalMarketNotify(EmailNotify):
     Market days default to lunar days {2, 7, 12, 17, 22, 27}.
     """
 
-    DEFAULT_MARKET_DAYS = {2, 7, 12, 17, 22, 27}
+    DEFAULT_MARKET_DAYS = {2, 7,11, 12, 17, 22, 27}
 
     def __init__(self, market_days=None):
         super().__init__()
@@ -36,7 +36,8 @@ class LocalMarketNotify(EmailNotify):
 
         if lunar_day in self.market_days:
             print(f"📢 赶集通知：今天是农历 {lunar.month}月{lunar.day}日，逢集，记得去赶集！")
-            self.send_email(to_addr="1312765847@qq.com")
+            self.send_email(to_addr="1312765847@qq.com",send_name="赶集日通知",msg_content=f"今天是农历 {lunar.month}月{lunar.day}日，是赶集日")
+            self.send_email(to_addr="3020909671@qq.com",send_name="赶集日通知",msg_content=f"今天是农历 {lunar.month}月{lunar.day}日，是赶集日")
             return True
         else:
             print(f"❌ 今天是农历 {lunar.month}月{lunar.day}日，不是赶集日")
