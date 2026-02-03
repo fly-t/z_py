@@ -3,6 +3,7 @@
 # pip install pyside6 pyserial
 
 import sys
+from datetime import datetime
 import serial
 import serial.tools.list_ports
 from PySide6.QtCore import QThread, Signal
@@ -150,6 +151,8 @@ class SerialAssistant(QMainWindow):
         self.serial.send(data)
         self.tx_count += len(data)
         self.status_tx.setText(f"S:{self.tx_count}")
+        timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+        self.ui.recvTextEdit.append(f"[{timestamp}]发→◇{text}")
 
     def on_data(self, data: bytes):
         self.rx_count += len(data)
