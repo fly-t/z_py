@@ -160,12 +160,13 @@ class SerialAssistant(QMainWindow):
         self.status_tx.setText(f"S:{self.tx_count}")
         if self.ui.tsDisplayCheck.isChecked():
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            self.ui.recvTextEdit.append(f"[{timestamp}]发→◇{text}")
+            send_text = self._format_bytes(data, self.ui.hexSendCheck.isChecked())
+            self.ui.recvTextEdit.append(f"[{timestamp}]发→◇{send_text}")
 
     def on_data(self, data: bytes):
         self.rx_count += len(data)
         self.status_rx.setText(f"R:{self.rx_count}")
-        text = data.decode(errors='ignore')
+        text = self._format_bytes(data, self.ui.hexDisplayCheck.isChecked())
         if self.ui.tsDisplayCheck.isChecked():
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             self.ui.recvTextEdit.append(f"[{timestamp}]收←◆{text}")
@@ -175,6 +176,11 @@ class SerialAssistant(QMainWindow):
 
     def on_status(self, msg):
         self.ui.recvTextEdit.append(f"[INFO] {msg}")
+
+    def _format_bytes(self, data: bytes, hex_mode: bool) -> str:
+        if hex_mode:
+            return " ".join(f"{b:02X}" for b in data)
+        return data.decode(errors='ignore')
 
 
 if __name__ == '__main__':
