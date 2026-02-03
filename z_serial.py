@@ -113,6 +113,15 @@ class SerialAssistant(QMainWindow):
         self.send_timer.timeout.connect(self.send_data)
         self.ui.sendButton.setEnabled(False)
         self.ui.timedSendCheck.setEnabled(False)
+        self._set_serial_config_enabled(True)
+
+    def _set_serial_config_enabled(self, enabled: bool):
+        self.ui.portCombo.setEnabled(enabled)
+        self.ui.baudCombo.setEnabled(enabled)
+        self.ui.dataBitsCombo.setEnabled(enabled)
+        self.ui.parityCombo.setEnabled(enabled)
+        self.ui.stopBitsCombo.setEnabled(enabled)
+        self.ui.refreshButton.setEnabled(enabled)
 
     def _build_status(self):
         bar = QStatusBar()
@@ -153,6 +162,7 @@ class SerialAssistant(QMainWindow):
             self.status_line.setText(f"{port} 已打开 {baud}bps,8,N,1")
             self.ui.sendButton.setEnabled(True)
             self.ui.timedSendCheck.setEnabled(True)
+            self._set_serial_config_enabled(False)
         else:
             if self.send_timer.isActive():
                 self.send_timer.stop()
@@ -164,6 +174,7 @@ class SerialAssistant(QMainWindow):
             self.status_line.setText("-")
             self.ui.sendButton.setEnabled(False)
             self.ui.timedSendCheck.setEnabled(False)
+            self._set_serial_config_enabled(True)
 
     def send_data(self):
         if not self.serial.worker.ser or not self.serial.worker.ser.is_open:
