@@ -154,7 +154,13 @@ class SerialAssistant(QMainWindow):
         text = self.ui.sendTextEdit.toPlainText()
         if not text:
             return
-        data = text.encode()
+        if self.ui.hexSendCheck.isChecked():
+            data = self._parse_hex_text(text)
+            if data is None:
+                self.ui.recvTextEdit.append("[INFO] HEX发送格式错误")
+                return
+        else:
+            data = text.encode()
         self.serial.send(data)
         self.tx_count += len(data)
         self.status_tx.setText(f"S:{self.tx_count}")
@@ -181,6 +187,24 @@ class SerialAssistant(QMainWindow):
         if hex_mode:
             return " ".join(f"{b:02X}" for b in data)
         return data.decode(errors='ignore')
+
+    def _parse_hex_text(self, text: str):
+        cleaned = text.replace("0x", " ").replace(",", " ").replace("\n", " ").replace("\t", " ")
+        parts = [p for p in cleaned.split(" ") if p]
+        if not parts:
+            return b""
+        if len(parts) == 1:
+            raw = parts[0]
+            if len(raw) % 2 != 0:
+                return None
+            try:
+                return bytes.fromhex(raw)
+            except ValueError:
+                return None
+        try:
+            return bytes(int(p, 16) for p in parts)
+        except ValueError:
+            return None
 
 
 if __name__ == '__main__':
