@@ -111,6 +111,8 @@ class SerialAssistant(QMainWindow):
         self.ui.timedSendCheck.toggled.connect(self.toggle_timed_send)
         self.ui.intervalSpin.valueChanged.connect(self.update_timer_interval)
         self.send_timer.timeout.connect(self.send_data)
+        self.ui.sendButton.setEnabled(False)
+        self.ui.timedSendCheck.setEnabled(False)
 
     def _build_status(self):
         bar = QStatusBar()
@@ -149,13 +151,24 @@ class SerialAssistant(QMainWindow):
             self.ui.openButton.setText("关闭串口")
             self.status_port.setText(port or "未选择")
             self.status_line.setText(f"{port} 已打开 {baud}bps,8,N,1")
+            self.ui.sendButton.setEnabled(True)
+            self.ui.timedSendCheck.setEnabled(True)
         else:
+            if self.send_timer.isActive():
+                self.send_timer.stop()
+            if self.ui.timedSendCheck.isChecked():
+                self.ui.timedSendCheck.setChecked(False)
             self.serial.close()
             self.ui.openButton.setText("打开串口")
             self.status_port.setText("未连接")
             self.status_line.setText("-")
+            self.ui.sendButton.setEnabled(False)
+            self.ui.timedSendCheck.setEnabled(False)
 
     def send_data(self):
+        if not self.serial.worker.ser or not self.serial.worker.ser.is_open:
+            self.ui.recvTextEdit.append("[INFO] 串口未打开，无法发送")
+            return
         text = self.ui.sendTextEdit.toPlainText()
         if not text:
             return
@@ -189,6 +202,10 @@ class SerialAssistant(QMainWindow):
         self.ui.recvTextEdit.append(f"[INFO] {msg}")
 
     def toggle_timed_send(self, checked: bool):
+        if checked and (not self.serial.worker.ser or not self.serial.worker.ser.is_open):
+            self.ui.recvTextEdit.append("[INFO] 串口未打开，无法定时发送")
+            self.ui.timedSendCheck.setChecked(False)
+            return
         if checked:
             if not self.send_timer.isActive():
                 self.send_timer.start(self.ui.intervalSpin.value())
