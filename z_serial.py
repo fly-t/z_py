@@ -157,8 +157,9 @@ class SerialAssistant(QMainWindow):
     def on_data(self, data: bytes):
         self.rx_count += len(data)
         self.status_rx.setText(f"R:{self.rx_count}")
-        self.ui.recvTextEdit.moveCursor(QTextCursor.End)
-        self.ui.recvTextEdit.insertPlainText(data.decode(errors='ignore'))
+        text = data.decode(errors='ignore')
+        timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+        self.ui.recvTextEdit.append(f"[{timestamp}]收←◆{text}")
 
     def on_status(self, msg):
         self.ui.recvTextEdit.append(f"[INFO] {msg}")
@@ -169,4 +170,3 @@ if __name__ == '__main__':
     w = SerialAssistant()
     w.show()
     sys.exit(app.exec())
-
