@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>820</width>
+    <height>620</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>串口/网络数据调试助手</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="mainLayout">
+    <property name="leftMargin">
+     <number>6</number>
+    </property>
+    <property name="topMargin">
+     <number>6</number>
+    </property>
+    <property name="rightMargin">
+     <number>6</number>
+    </property>
+    <property name="bottomMargin">
+     <number>4</number>
+    </property>
+    <property name="spacing">
+     <number>6</number>
+    </property>
+    <item>
+     <widget class="QTextEdit" name="recvTextEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="placeholderText">
+       <string>接收区</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="midPanel">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <layout class="QGridLayout" name="midLayout">
+       <property name="leftMargin">
+        <number>6</number>
+       </property>
+       <property name="topMargin">
+        <number>6</number>
+       </property>
+       <property name="rightMargin">
+        <number>6</number>
+       </property>
+       <property name="bottomMargin">
+        <number>6</number>
+       </property>
+       <property name="horizontalSpacing">
+        <number>8</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>4</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="portLabel">
+         <property name="text">
+          <string>端口号</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QComboBox" name="portCombo"/>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="refreshButton">
+         <property name="text">
+          <string>刷新</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5" colspan="3">
+        <widget class="QPushButton" name="openButton">
+         <property name="text">
+          <string>打开串口</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="baudLabel">
+         <property name="text">
+          <string>波特率</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="baudCombo"/>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLabel" name="dataBitsLabel">
+         <property name="text">
+          <string>数据位</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QComboBox" name="dataBitsCombo"/>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLabel" name="parityLabel">
+         <property name="text">
+          <string>校验</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QComboBox" name="parityCombo"/>
+       </item>
+       <item row="1" column="6">
+        <widget class="QLabel" name="stopBitsLabel">
+         <property name="text">
+          <string>停止位</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="7">
+        <widget class="QComboBox" name="stopBitsCombo"/>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QCheckBox" name="hexDisplayCheck">
+         <property name="text">
+          <string>HEX显示</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2" colspan="2">
+        <widget class="QCheckBox" name="tsDisplayCheck">
+         <property name="text">
+          <string>加时间戳</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4" colspan="2">
+        <widget class="QCheckBox" name="splitDisplayCheck">
+         <property name="text">
+          <string>加间隔符</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="sendPanel">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <layout class="QGridLayout" name="sendLayout">
+       <property name="leftMargin">
+        <number>6</number>
+       </property>
+       <property name="topMargin">
+        <number>6</number>
+       </property>
+       <property name="rightMargin">
+        <number>6</number>
+       </property>
+       <property name="bottomMargin">
+        <number>6</number>
+       </property>
+       <property name="horizontalSpacing">
+        <number>8</number>
+       </property>
+       <property name="verticalSpacing">
+        <number>4</number>
+       </property>
+       <item row="0" column="0" rowspan="2" colspan="6">
+        <widget class="QTextEdit" name="sendTextEdit">
+         <property name="placeholderText">
+          <string>发送区</string>
+         </property>
+         <property name="minimumHeight">
+          <number>90</number>
+         </property>
+         <property name="maximumHeight">
+          <number>90</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <widget class="QPushButton" name="sendButton">
+         <property name="text">
+          <string>发送</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QPushButton" name="clearRecvButton">
+         <property name="text">
+          <string>清除接收</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7">
+        <widget class="QPushButton" name="clearSendButton">
+         <property name="text">
+          <string>清除发送</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="hexSendCheck">
+         <property name="text">
+          <string>HEX发送</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="timedSendCheck">
+         <property name="text">
+          <string>定时发送</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QSpinBox" name="intervalSpin">
+         <property name="minimum">
+          <number>10</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+         <property name="value">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="intervalLabel">
+         <property name="text">
+          <string>ms/次</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>820</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuComm">
+    <property name="title">
+     <string>通讯端口</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuSerial">
+    <property name="title">
+     <string>串口设置</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuDisplay">
+    <property name="title">
+     <string>显示</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuSend">
+    <property name="title">
+     <string>发送</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuMulti">
+    <property name="title">
+     <string>多字符串</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>小工具</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>帮助</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuContact">
+    <property name="title">
+     <string>联系作者</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuSite">
+    <property name="title">
+     <string>大白电子</string>
+    </property>
+   </widget>
+   <addaction name="menuComm"/>
+   <addaction name="menuSerial"/>
+   <addaction name="menuDisplay"/>
+   <addaction name="menuSend"/>
+   <addaction name="menuMulti"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuHelp"/>
+   <addaction name="menuContact"/>
+   <addaction name="menuSite"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+
