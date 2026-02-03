@@ -91,6 +91,9 @@ class SerialAssistant(QMainWindow):
         self.rx_count = 0
         self.send_timer = QTimer(self)
         self.send_timer.setSingleShot(False)
+        self.port_scan_timer = QTimer(self)
+        self.port_scan_timer.setSingleShot(False)
+        self._last_ports = []
 
         self._init_controls()
         self._build_status()
@@ -114,6 +117,8 @@ class SerialAssistant(QMainWindow):
         self.ui.sendButton.setEnabled(False)
         self.ui.timedSendCheck.setEnabled(False)
         self._set_serial_config_enabled(True)
+        self.port_scan_timer.timeout.connect(self._scan_ports)
+        self.port_scan_timer.start(500)
 
     def _set_serial_config_enabled(self, enabled: bool):
         self.ui.portCombo.setEnabled(enabled)
@@ -139,11 +144,18 @@ class SerialAssistant(QMainWindow):
     def refresh_ports(self):
         self.ui.portCombo.clear()
         ports = serial.tools.list_ports.comports()
+        self._last_ports = [p.device for p in ports]
         for p in ports:
             maker = p.manufacturer or ""
             extra = maker.strip()
             label = f"{p.device} {extra}".strip()
             self.ui.portCombo.addItem(label, p.device)
+
+    def _scan_ports(self):
+        ports = serial.tools.list_ports.comports()
+        devices = [p.device for p in ports]
+        if devices != self._last_ports:
+            self.refresh_ports()
     
     def clear_recv(self):
         self.ui.recvTextEdit.clear()
