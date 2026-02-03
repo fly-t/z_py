@@ -104,7 +104,7 @@ class SerialAssistant(QMainWindow):
         self.ui.openButton.clicked.connect(self.toggle_serial)
         self.ui.refreshButton.clicked.connect(self.refresh_ports)
         self.ui.sendButton.clicked.connect(self.send_data)
-        self.ui.clearRecvButton.clicked.connect(self.ui.recvTextEdit.clear)
+        self.ui.clearRecvButton.clicked.connect(self.clear_recv)
         self.ui.clearSendButton.clicked.connect(self.ui.sendTextEdit.clear)
 
     def _build_status(self):
@@ -128,6 +128,13 @@ class SerialAssistant(QMainWindow):
             extra = maker.strip()
             label = f"{p.device} {extra}".strip()
             self.ui.portCombo.addItem(label, p.device)
+    
+    def clear_recv(self):
+        self.ui.recvTextEdit.clear()
+        self.tx_count = 0
+        self.rx_count = 0
+        self.status_tx.setText(f"S:{str(self.tx_count)}")
+        self.status_rx.setText(f"R:{str(self.rx_count)}")
 
     def toggle_serial(self):
         if self.ui.openButton.text() == "打开串口":
