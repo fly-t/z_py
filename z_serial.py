@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 import serial
 import serial.tools.list_ports
-from PySide6.QtCore import QThread, Signal
+from PySide6.QtCore import QThread, Signal, QTimer
 from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QStatusBar
 
@@ -89,6 +89,8 @@ class SerialAssistant(QMainWindow):
 
         self.tx_count = 0
         self.rx_count = 0
+        self.send_timer = QTimer(self)
+        self.send_timer.setSingleShot(False)
 
         self._init_controls()
         self._build_status()
@@ -106,6 +108,9 @@ class SerialAssistant(QMainWindow):
         self.ui.sendButton.clicked.connect(self.send_data)
         self.ui.clearRecvButton.clicked.connect(self.clear_recv)
         self.ui.clearSendButton.clicked.connect(self.ui.sendTextEdit.clear)
+        self.ui.timedSendCheck.toggled.connect(self.toggle_timed_send)
+        self.ui.intervalSpin.valueChanged.connect(self.update_timer_interval)
+        self.send_timer.timeout.connect(self.send_data)
 
     def _build_status(self):
         bar = QStatusBar()
@@ -182,6 +187,18 @@ class SerialAssistant(QMainWindow):
 
     def on_status(self, msg):
         self.ui.recvTextEdit.append(f"[INFO] {msg}")
+
+    def toggle_timed_send(self, checked: bool):
+        if checked:
+            if not self.send_timer.isActive():
+                self.send_timer.start(self.ui.intervalSpin.value())
+        else:
+            if self.send_timer.isActive():
+                self.send_timer.stop()
+
+    def update_timer_interval(self, value: int):
+        if self.send_timer.isActive():
+            self.send_timer.start(value)
 
     def _format_bytes(self, data: bytes, hex_mode: bool) -> str:
         if hex_mode:
