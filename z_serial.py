@@ -211,6 +211,22 @@ class SerialAssistant(QMainWindow):
 
     def on_status(self, msg):
         self.ui.recvTextEdit.append(f"[INFO] {msg}")
+        if "ClearCommError failed" in msg:
+            self._handle_serial_error_close()
+
+    def _handle_serial_error_close(self):
+        if self.send_timer.isActive():
+            self.send_timer.stop()
+        if self.ui.timedSendCheck.isChecked():
+            self.ui.timedSendCheck.setChecked(False)
+        self.serial.close()
+        self.ui.openButton.setText("打开串口")
+        self.status_port.setText("未连接")
+        self.status_line.setText("-")
+        self.ui.sendButton.setEnabled(False)
+        self.ui.timedSendCheck.setEnabled(False)
+        self._set_serial_config_enabled(True)
+        self.refresh_ports()
 
     def toggle_timed_send(self, checked: bool):
         if checked and (not self.serial.worker.ser or not self.serial.worker.ser.is_open):
