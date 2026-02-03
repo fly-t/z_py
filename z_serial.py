@@ -54,6 +54,10 @@ class SerialWorker(QThread):
                     self.status.emit(str(e))
             self.msleep(5)
 
+    def stop(self):
+        self.running = False
+        self.requestInterruption()
+
 
 class SerialPortManager:
     def __init__(self):
@@ -75,6 +79,12 @@ class SerialPortManager:
 
     def send(self, data: bytes):
         self.worker.send(data)
+
+    def stop(self):
+        self.worker.stop()
+        if self.worker.isRunning():
+            self.worker.terminate()
+            self.worker.wait(500)
 
 
 class SerialAssistant(QMainWindow):
@@ -278,6 +288,17 @@ class SerialAssistant(QMainWindow):
             return bytes(int(p, 16) for p in parts)
         except ValueError:
             return None
+
+    def closeEvent(self, event):
+        if self.send_timer.isActive():
+            self.send_timer.stop()
+        if self.port_scan_timer.isActive():
+            self.port_scan_timer.stop()
+        if self.ui.timedSendCheck.isChecked():
+            self.ui.timedSendCheck.setChecked(False)
+        self.serial.close()
+        self.serial.stop()
+        event.accept()
 
 
 if __name__ == '__main__':
