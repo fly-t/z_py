@@ -158,15 +158,20 @@ class SerialAssistant(QMainWindow):
         self.serial.send(data)
         self.tx_count += len(data)
         self.status_tx.setText(f"S:{self.tx_count}")
-        timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-        self.ui.recvTextEdit.append(f"[{timestamp}]发→◇{text}")
+        if self.ui.tsDisplayCheck.isChecked():
+            timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            self.ui.recvTextEdit.append(f"[{timestamp}]发→◇{text}")
 
     def on_data(self, data: bytes):
         self.rx_count += len(data)
         self.status_rx.setText(f"R:{self.rx_count}")
         text = data.decode(errors='ignore')
-        timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-        self.ui.recvTextEdit.append(f"[{timestamp}]收←◆{text}")
+        if self.ui.tsDisplayCheck.isChecked():
+            timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
+            self.ui.recvTextEdit.append(f"[{timestamp}]收←◆{text}")
+        else:
+            self.ui.recvTextEdit.moveCursor(QTextCursor.End)
+            self.ui.recvTextEdit.insertPlainText(text)
 
     def on_status(self, msg):
         self.ui.recvTextEdit.append(f"[INFO] {msg}")
