@@ -124,8 +124,7 @@ class SerialAssistant(QMainWindow):
         ports = serial.tools.list_ports.comports()
         for p in ports:
             maker = p.manufacturer or ""
-            desc = p.description or ""
-            extra = " ".join([x for x in [desc, maker] if x]).strip()
+            extra = maker.strip()
             label = f"{p.device} {extra}".strip()
             self.ui.portCombo.addItem(label, p.device)
 
