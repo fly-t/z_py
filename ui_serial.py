@@ -66,7 +66,7 @@ class Ui_MainWindow(object):
         self.tsDisplayCheck = QtWidgets.QCheckBox("加时间戳", self.midPanel)
         self.midLayout.addWidget(self.tsDisplayCheck, 2, 2, 1, 2)
 
-        self.splitDisplayCheck = QtWidgets.QCheckBox("加间隔符", self.midPanel)
+        self.splitDisplayCheck = QtWidgets.QCheckBox("增加换行", self.midPanel)
         self.midLayout.addWidget(self.splitDisplayCheck, 2, 4, 1, 2)
 
         self.mainLayout.addWidget(self.midPanel)

@@ -234,12 +234,18 @@ class SerialAssistant(QMainWindow):
                 return
         else:
             data = text.encode()
+        if self.ui.splitDisplayCheck.isChecked():
+            data += b"\n"
         self.serial.send(data)
         self.tx_count += len(data)
         self.status_tx.setText(f"S:{self.tx_count}")
         if self.ui.tsDisplayCheck.isChecked():
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
-            send_text = self._format_bytes(data, self.ui.hexSendCheck.isChecked())
+            send_text = self._format_bytes(
+                data,
+                self.ui.hexSendCheck.isChecked(),
+                allow_split=False,
+            )
             self.ui.recvTextEdit.append(f"[{timestamp}]发→◇{send_text}")
 
     def on_data(self, data: bytes):
@@ -288,10 +294,13 @@ class SerialAssistant(QMainWindow):
         if self.send_timer.isActive():
             self.send_timer.start(value)
 
-    def _format_bytes(self, data: bytes, hex_mode: bool) -> str:
+    def _format_bytes(self, data: bytes, hex_mode: bool, allow_split: bool = True) -> str:
+        add_newline = allow_split and self.ui.splitDisplayCheck.isChecked()
         if hex_mode:
-            return " ".join(f"{b:02X}" for b in data)
-        return data.decode(errors='ignore')
+            sep = "\n" if add_newline else " "
+            return sep.join(f"{b:02X}" for b in data)
+        text = data.decode(errors='ignore')
+        return f"{text}\n" if add_newline else text
 
     def _parse_hex_text(self, text: str):
         cleaned = text.replace("0x", " ").replace(",", " ").replace("\n", " ").replace("\t", " ")
