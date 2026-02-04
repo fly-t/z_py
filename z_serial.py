@@ -36,8 +36,11 @@ class SerialWorker(QThread):
             if not self.isRunning():
                 self.start()
             self.status.emit(f"打开串口 {port} @ {baud}")
+            return True
         except Exception as e:
             self.status.emit(str(e))
+            self.ser = None
+            return False
 
     def close(self):
         self.running = False
@@ -79,7 +82,7 @@ class SerialPortManager:
         return self.worker.status
 
     def open(self, port, baud, data_bits, parity, stop_bits):
-        self.worker.open(port, baud, data_bits, parity, stop_bits)
+        return self.worker.open(port, baud, data_bits, parity, stop_bits)
 
     def close(self):
         self.worker.close()
@@ -200,13 +203,13 @@ class SerialAssistant(QMainWindow):
             }
             parity = parity_map.get(parity_text, serial.PARITY_NONE)
             stop_bits = stop_bits_map.get(stop_bits_text, serial.STOPBITS_ONE)
-            self.serial.open(port, baud, data_bits, parity, stop_bits)
-            self.ui.openButton.setText("关闭串口")
-            self.status_port.setText(port or "未选择")
-            self.status_line.setText(f"{port} 已打开 {baud}bps,{data_bits},{parity_text},{stop_bits_text}")
-            self.ui.sendButton.setEnabled(True)
-            self.ui.timedSendCheck.setEnabled(True)
-            self._set_serial_config_enabled(False)
+            if self.serial.open(port, baud, data_bits, parity, stop_bits):
+                self.ui.openButton.setText("关闭串口")
+                self.status_port.setText(port or "未选择")
+                self.status_line.setText(f"{port} 已打开 {baud}bps,{data_bits},{parity_text},{stop_bits_text}")
+                self.ui.sendButton.setEnabled(True)
+                self.ui.timedSendCheck.setEnabled(True)
+                self._set_serial_config_enabled(False)
         else:
             if self.send_timer.isActive():
                 self.send_timer.stop()
