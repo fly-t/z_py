@@ -29,7 +29,11 @@
 
 ``` c
 pyside6-rcc images.qrc -o images_rc.py
-Pyinstaller -F -w -i .\logo\sscom6.ico .\z_serial.py --distpath build
+
+pyinstaller -F -w -i .\logo\sscom6.ico .\z_serial.py --distpath build 
+
+# 使用现有的打包文件
+pyinstaller .\z_serial.spec
 ```
 
 

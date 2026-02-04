@@ -1,6 +1,9 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-
+# top of spec
+with open("version.txt", "r", encoding="utf-8") as f:
+    VER = f.read().strip()
+    
 a = Analysis(
     ['z_serial.py'],
     pathex=[],
@@ -22,7 +25,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='z_serial',
+    name=f"sscom_{VER}",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
