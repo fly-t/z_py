@@ -10,7 +10,7 @@ from PySide6.QtCore import QThread, Signal, QTimer
 from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QStatusBar
 
-from ui_serial import Ui_MainWindow
+from serial_ui import Ui_MainWindow
 
 
 class SerialWorker(QThread):
@@ -251,7 +251,8 @@ class SerialAssistant(QMainWindow):
     def on_data(self, data: bytes):
         self.rx_count += len(data)
         self.status_rx.setText(f"R:{self.rx_count}")
-        text = self._format_bytes(data, self.ui.hexDisplayCheck.isChecked())
+        hex_mode = self.ui.hexDisplayCheck.isChecked()
+        text = self._format_bytes(data, hex_mode, allow_split=not hex_mode)
         if self.ui.tsDisplayCheck.isChecked():
             timestamp = datetime.now().strftime("%H:%M:%S.%f")[:-3]
             self.ui.recvTextEdit.append(f"[{timestamp}]收←◆{text}")
