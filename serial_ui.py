@@ -26,6 +26,9 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(820, 620)
+        icon = QIcon()
+        icon.addFile(u"../sscom6.ico", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        MainWindow.setWindowIcon(icon)
         self.actionssss = QAction(MainWindow)
         self.actionssss.setObjectName(u"actionssss")
         self.actionizhangtengfei_163_com = QAction(MainWindow)
@@ -212,8 +215,8 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u4e32\u53e3/\u7f51\u7edc\u6570\u636e\u8c03\u8bd5\u52a9\u624b", None))
-        self.actionssss.setText(QCoreApplication.translate("MainWindow", u"v1.0", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"\u4e32\u53e3\u8c03\u8bd5\u52a9\u624b(\u5c0fxia)", None))
+        self.actionssss.setText(QCoreApplication.translate("MainWindow", u"v6.0", None))
         self.actionizhangtengfei_163_com.setText(QCoreApplication.translate("MainWindow", u"izhangtengfei@163.com", None))
         self.recvTextEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u63a5\u6536\u533a", None))
         self.stopBitsLabel.setText(QCoreApplication.translate("MainWindow", u"\u505c\u6b62\u4f4d", None))

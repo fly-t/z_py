@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>tengfei</author>
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
@@ -11,7 +12,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>串口/网络数据调试助手</string>
+   <string>串口调试助手(小xia)</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../sscom6.ico</normaloff>../sscom6.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="mainLayout">
@@ -291,7 +296,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionssss">
    <property name="text">
-    <string>v1.0</string>
+    <string>v6.0</string>
    </property>
   </action>
   <action name="actionizhangtengfei_163_com">
