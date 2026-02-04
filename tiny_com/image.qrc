@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/">
+    <file>./logo/sscom6.ico</file>
+  </qresource>
+</RCC>

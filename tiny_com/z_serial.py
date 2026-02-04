@@ -11,6 +11,10 @@ from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QStatusBar
 
 from serial_ui import Ui_MainWindow
+from PySide6.QtGui import QIcon
+import image_rc
+
+
 
 
 class SerialWorker(QThread):
@@ -102,6 +106,8 @@ class SerialAssistant(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.setWindowIcon(QIcon(":/logo/sscom6.ico"))
+
 
         self.serial = SerialPortManager()
         self.serial.data_received.connect(self.on_data)

@@ -50,23 +50,6 @@ class Ui_MainWindow(object):
         self.midPanel.setFrameShape(QFrame.Shape.StyledPanel)
         self.gridLayout = QGridLayout(self.midPanel)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.parityCombo = QComboBox(self.midPanel)
-        self.parityCombo.setObjectName(u"parityCombo")
-
-        self.gridLayout.addWidget(self.parityCombo, 2, 6, 1, 1)
-
-        self.stopBitsLabel = QLabel(self.midPanel)
-        self.stopBitsLabel.setObjectName(u"stopBitsLabel")
-        self.stopBitsLabel.setMaximumSize(QSize(40, 16777215))
-        self.stopBitsLabel.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-
-        self.gridLayout.addWidget(self.stopBitsLabel, 2, 7, 1, 1)
-
-        self.stopBitsCombo = QComboBox(self.midPanel)
-        self.stopBitsCombo.setObjectName(u"stopBitsCombo")
-
-        self.gridLayout.addWidget(self.stopBitsCombo, 2, 8, 1, 1)
-
         self.portLabel = QLabel(self.midPanel)
         self.portLabel.setObjectName(u"portLabel")
         self.portLabel.setMaximumSize(QSize(16777215, 16777215))
@@ -74,15 +57,50 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.portLabel, 1, 0, 1, 1)
 
-        self.refreshButton = QPushButton(self.midPanel)
-        self.refreshButton.setObjectName(u"refreshButton")
+        self.clearRecvButton = QPushButton(self.midPanel)
+        self.clearRecvButton.setObjectName(u"clearRecvButton")
 
-        self.gridLayout.addWidget(self.refreshButton, 1, 3, 1, 1)
+        self.gridLayout.addWidget(self.clearRecvButton, 0, 0, 1, 1)
 
         self.openButton = QPushButton(self.midPanel)
         self.openButton.setObjectName(u"openButton")
 
-        self.gridLayout.addWidget(self.openButton, 1, 4, 1, 1)
+        self.gridLayout.addWidget(self.openButton, 1, 6, 1, 1)
+
+        self.parityCombo = QComboBox(self.midPanel)
+        self.parityCombo.setObjectName(u"parityCombo")
+
+        self.gridLayout.addWidget(self.parityCombo, 2, 8, 1, 1)
+
+        self.portCombo = QComboBox(self.midPanel)
+        self.portCombo.setObjectName(u"portCombo")
+
+        self.gridLayout.addWidget(self.portCombo, 1, 2, 1, 2)
+
+        self.baudCombo = QComboBox(self.midPanel)
+        self.baudCombo.setObjectName(u"baudCombo")
+
+        self.gridLayout.addWidget(self.baudCombo, 2, 2, 1, 1)
+
+        self.refreshButton = QPushButton(self.midPanel)
+        self.refreshButton.setObjectName(u"refreshButton")
+
+        self.gridLayout.addWidget(self.refreshButton, 1, 5, 1, 1)
+
+        self.hexDisplayCheck = QCheckBox(self.midPanel)
+        self.hexDisplayCheck.setObjectName(u"hexDisplayCheck")
+
+        self.gridLayout.addWidget(self.hexDisplayCheck, 3, 0, 1, 1)
+
+        self.stopBitsCombo = QComboBox(self.midPanel)
+        self.stopBitsCombo.setObjectName(u"stopBitsCombo")
+
+        self.gridLayout.addWidget(self.stopBitsCombo, 2, 10, 1, 1)
+
+        self.dataBitsCombo = QComboBox(self.midPanel)
+        self.dataBitsCombo.setObjectName(u"dataBitsCombo")
+
+        self.gridLayout.addWidget(self.dataBitsCombo, 2, 5, 1, 1)
 
         self.baudLabel = QLabel(self.midPanel)
         self.baudLabel.setObjectName(u"baudLabel")
@@ -90,48 +108,30 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.baudLabel, 2, 0, 1, 1)
 
-        self.portCombo = QComboBox(self.midPanel)
-        self.portCombo.setObjectName(u"portCombo")
+        self.stopBitsLabel = QLabel(self.midPanel)
+        self.stopBitsLabel.setObjectName(u"stopBitsLabel")
+        self.stopBitsLabel.setMaximumSize(QSize(40, 16777215))
+        self.stopBitsLabel.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
-        self.gridLayout.addWidget(self.portCombo, 1, 1, 1, 2)
-
-        self.baudCombo = QComboBox(self.midPanel)
-        self.baudCombo.setObjectName(u"baudCombo")
-
-        self.gridLayout.addWidget(self.baudCombo, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.stopBitsLabel, 2, 9, 1, 1)
 
         self.dataBitsLabel = QLabel(self.midPanel)
         self.dataBitsLabel.setObjectName(u"dataBitsLabel")
         self.dataBitsLabel.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.gridLayout.addWidget(self.dataBitsLabel, 2, 2, 1, 1)
-
-        self.dataBitsCombo = QComboBox(self.midPanel)
-        self.dataBitsCombo.setObjectName(u"dataBitsCombo")
-
-        self.gridLayout.addWidget(self.dataBitsCombo, 2, 3, 1, 1)
+        self.gridLayout.addWidget(self.dataBitsLabel, 2, 3, 1, 1)
 
         self.parityLabel = QLabel(self.midPanel)
         self.parityLabel.setObjectName(u"parityLabel")
         self.parityLabel.setMaximumSize(QSize(40, 16777215))
         self.parityLabel.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
-        self.gridLayout.addWidget(self.parityLabel, 2, 4, 1, 1)
-
-        self.hexDisplayCheck = QCheckBox(self.midPanel)
-        self.hexDisplayCheck.setObjectName(u"hexDisplayCheck")
-
-        self.gridLayout.addWidget(self.hexDisplayCheck, 0, 0, 1, 1)
-
-        self.clearRecvButton = QPushButton(self.midPanel)
-        self.clearRecvButton.setObjectName(u"clearRecvButton")
-
-        self.gridLayout.addWidget(self.clearRecvButton, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.parityLabel, 2, 6, 1, 1)
 
         self.tsDisplayCheck = QCheckBox(self.midPanel)
         self.tsDisplayCheck.setObjectName(u"tsDisplayCheck")
 
-        self.gridLayout.addWidget(self.tsDisplayCheck, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.tsDisplayCheck, 3, 2, 1, 1)
 
 
         self.mainLayout.addWidget(self.midPanel)
@@ -219,15 +219,15 @@ class Ui_MainWindow(object):
         self.actionssss.setText(QCoreApplication.translate("MainWindow", u"v6.0", None))
         self.actionizhangtengfei_163_com.setText(QCoreApplication.translate("MainWindow", u"izhangtengfei@163.com", None))
         self.recvTextEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u63a5\u6536\u533a", None))
-        self.stopBitsLabel.setText(QCoreApplication.translate("MainWindow", u"\u505c\u6b62\u4f4d", None))
         self.portLabel.setText(QCoreApplication.translate("MainWindow", u"\u7aef\u53e3\u53f7", None))
-        self.refreshButton.setText(QCoreApplication.translate("MainWindow", u"\u5237\u65b0", None))
+        self.clearRecvButton.setText(QCoreApplication.translate("MainWindow", u"\u6e05\u9664\u63a5\u6536", None))
         self.openButton.setText(QCoreApplication.translate("MainWindow", u"\u6253\u5f00\u4e32\u53e3", None))
+        self.refreshButton.setText(QCoreApplication.translate("MainWindow", u"\u5237\u65b0", None))
+        self.hexDisplayCheck.setText(QCoreApplication.translate("MainWindow", u"HEX\u663e\u793a", None))
         self.baudLabel.setText(QCoreApplication.translate("MainWindow", u"\u6ce2\u7279\u7387", None))
+        self.stopBitsLabel.setText(QCoreApplication.translate("MainWindow", u"\u505c\u6b62\u4f4d", None))
         self.dataBitsLabel.setText(QCoreApplication.translate("MainWindow", u"\u6570\u636e\u4f4d", None))
         self.parityLabel.setText(QCoreApplication.translate("MainWindow", u"\u6821\u9a8c ", None))
-        self.hexDisplayCheck.setText(QCoreApplication.translate("MainWindow", u"HEX\u663e\u793a", None))
-        self.clearRecvButton.setText(QCoreApplication.translate("MainWindow", u"\u6e05\u9664\u63a5\u6536", None))
         self.tsDisplayCheck.setText(QCoreApplication.translate("MainWindow", u"\u52a0\u65f6\u95f4\u6233", None))
         self.clearSendButton.setText(QCoreApplication.translate("MainWindow", u"\u6e05\u9664\u53d1\u9001", None))
         self.sendButton.setText(QCoreApplication.translate("MainWindow", u"\u53d1\u9001", None))
